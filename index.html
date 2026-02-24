@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Meta Structure -->
+    <title>SRK INTERIOR | Premium Wall & Ceiling Designs</title>
+    <meta name="description" content="Elevate your space with SRK Interior. Discover an exclusive range of premium fluted panels, marble-finish sheets, wooden louvers, and aesthetic ceiling solutions.">
+    <meta name="keywords" content="interior design, fluted panels, wooden louvers, UV marble sheets, false ceiling, premium interiors, architectural finishes">
+    <meta name="author" content="SRK Interior">
+    <link rel="canonical" href="https://www.srkinterior.com/">
+
+    <!-- OpenGraph (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.srkinterior.com/">
+    <meta property="og:title" content="SRK INTERIOR | Premium Wall & Ceiling Designs">
+    <meta property="og:description" content="Transform standard architecture into masterpieces with our premium panels, louvers, and sheets.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SRK INTERIOR | Premium Interiors">
+    <meta name="twitter:description" content="Transform standard architecture into masterpieces with our premium panels, louvers, and sheets.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS (In production, replace with compiled CSS via npm/PostCSS) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        srk: {
+                            dark: '#111111',
+                            light: '#F8F8F8',
+                            wood: '#A06B3E',
+                            woodDark: '#5E3A1A',
+                            gold: '#D4AF37',
+                            marble: '#EAEAEA'
+                        }
+                    },
+                    backgroundImage: {
+                        'wood-pattern': "url('https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?q=80&w=2070&auto=format&fit=crop')",
+                        'marble-pattern': "url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop')"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Styles & Utilities (In production, extract to global.css) */
+        body {
+            background-color: #F8F8F8;
+            color: #111111;
+            overflow-x: hidden;
+            transition: background-color 0.6s ease;
+            /* Removed will-change to save mobile memory */
+        }
+
+        /* Hardware acceleration for scroll elements */
+        .scroll-anim, .image-reveal {
+            will-change: transform, opacity;
+        }
+
+        /* Glass Nav & Theme States */
+        .glass-nav {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transform: translateZ(0); /* Forces GPU hardware acceleration for mobile */
+        }
+        
+        #navbar {
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+            border-bottom: 1px solid transparent;
+            will-change: background-color, box-shadow; /* Performance optimization */
+        }
+        
+        /* Light Theme Nav */
+        #navbar.nav-light {
+            color: #111111;
+            border-bottom-color: rgba(0, 0, 0, 0.05);
+        }
+        #navbar.nav-light.scrolled {
+            background-color: rgba(248, 248, 248, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Dark Theme Nav */
+        #navbar.nav-dark {
+            color: #ffffff;
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+        #navbar.nav-dark.scrolled {
+            background-color: rgba(17, 17, 17, 0.95);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        #navbar.nav-dark img {
+            filter: brightness(0) invert(1);
+        }
+        #navbar.nav-dark a:not(.quote-btn) {
+            color: #ffffff;
+        }
+        #navbar.nav-dark a:not(.quote-btn):hover {
+            color: #A06B3E;
+        }
+        #navbar.nav-dark .text-srk-dark {
+            color: #ffffff;
+        }
+        #navbar.nav-dark .quote-btn {
+            background-color: #ffffff;
+            color: #111111;
+        }
+        #navbar.nav-dark .quote-btn:hover {
+            background-color: #A06B3E;
+            color: #ffffff;
+        }
+
+        .text-outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+        }
+
+        .panel-shadow {
+            box-shadow: 20px 20px 60px #d3d3d3, -20px -20px 60px #ffffff;
+        }
+
+        .ambient-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .img-mask {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+            will-change: transform, clip-path; /* Performance optimization */
+        }
+
+        /* ─── Custom Cursor (Desktop Only) ─────────────────────────── */
+        #cursor-dot, #cursor-ring {
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            * { cursor: none !important; }
+
+            #cursor-dot {
+                position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+                background: #D4AF37; border-radius: 50%; pointer-events: none;
+                z-index: 99999; transform: translate(-50%, -50%); /* Base transform */
+                transition: width 0.2s, height 0.2s, background 0.2s; display: block;
+                will-change: transform; /* Performance optimization */
+            }
+
+            #cursor-ring {
+                position: fixed; top: 0; left: 0; width: 36px; height: 36px;
+                border: 1.5px solid rgba(212, 175, 55, 0.75); border-radius: 50%;
+                pointer-events: none; z-index: 99998; transform: translate(-50%, -50%); /* Base transform */
+                transition: width 0.35s ease, height 0.35s ease, border-color 0.35s ease;
+                backdrop-filter: invert(5%); display: block;
+                will-change: transform; /* Performance optimization */
+            }
+
+            body.cursor-hover #cursor-dot {
+                width: 12px; height: 12px; background: #ffffff;
+            }
+            body.cursor-hover #cursor-ring {
+                width: 54px; height: 54px; border-color: rgba(212, 175, 55, 1);
+            }
+        }
+        
+        /* ─── Before/After Slider ───────────────────────────────────── */
+        .comparison-slider {
+            position: relative; width: 100%; height: 600px;
+            overflow: hidden; cursor: ew-resize !important;
+        }
+
+        .comparison-slider .image-after {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+        }
+
+        .comparison-slider .image-before {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center; clip-path: inset(0 50% 0 0);
+            will-change: clip-path;
+        }
+
+        .slider-handle {
+            position: absolute; top: 0; left: 50%; width: 2px; height: 100%;
+            background: white; transform: translateX(-50%); display: flex;
+            align-items: center; justify-content: center; pointer-events: none;
+            will-change: left;
+        }
+
+        .handle-circle {
+            width: 48px; height: 48px; background: white; border: 4px solid #D4AF37;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #111111; box-shadow: 0 4px 20px rgba(0,0,0,0.3); pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-srk-wood selection:text-white">
+
+    <!-- Custom Cursor Elements -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex justify-between items-center relative">
+            <div class="text-2xl font-serif font-bold tracking-wider flex items-center gap-2 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
+                <img src="pictures/logo.png" alt="Logo" class="w-auto h-8">
+                SRK <span class="text-srk-wood">INTERIOR</span>
+            </div>
+
+            <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide">
+                <a href="#home" class="hover:text-srk-wood transition-colors">HOME</a>
+                <a href="#collections" class="hover:text-srk-wood transition-colors">COLLECTIONS</a>
+                <a href="#showroom" class="hover:text-srk-wood transition-colors">SHOWROOM</a>
+                <a href="#contact" class="hover:text-srk-wood transition-colors">CONTACT</a>
+            </div>
+
+            <a href="https://wa.me/1234567890?text=Hi,%20I%20would%20like%20to%20get%20a%20quote%20for%20my%20interior%20space." target="_blank" rel="noopener noreferrer"
+                class="hidden md:block px-6 py-2.5 bg-srk-dark text-white text-sm font-medium tracking-wide hover:bg-srk-wood transition-colors rounded-none">
+                GET A QUOTE
+            </a>
+
+            <!-- Mobile Menu Icon -->
+            <button class="md:hidden text-srk-dark ml-auto" id="mobile-menu-btn" onclick="toggleMobileMenu(true)">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-[60] flex flex-col items-center justify-center gap-8 translate-x-full transition-transform duration-500 md:hidden">
+        <button onclick="toggleMobileMenu(false)" class="absolute top-6 right-6 text-srk-dark">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div id="mobile-menu-logo" class="flex flex-col items-center gap-2 mb-8 opacity-0">
+            <img src="pictures/logo.png" alt="Logo" class="h-10 w-auto">
+            <div class="text-2xl font-serif font-bold tracking-wider">
+                SRK <span class="text-srk-wood">INTERIOR</span>
+            </div>
+        </div>
+        <a href="#home" onclick="toggleMobileMenu(false)" class="mobile-link opacity-0 text-2xl font-serif text-srk-dark hover:text-srk-wood">HOME</a>
+        <a href="#collections" onclick="toggleMobileMenu(false)" class="mobile-link opacity-0 text-2xl font-serif text-srk-dark hover:text-srk-wood">COLLECTIONS</a>
+        <a href="#projects" onclick="toggleMobileMenu(false)" class="mobile-link opacity-0 text-2xl font-serif text-srk-dark hover:text-srk-wood">PROJECTS</a>
+        <a href="#showroom" onclick="toggleMobileMenu(false)" class="mobile-link opacity-0 text-2xl font-serif text-srk-dark hover:text-srk-wood">SHOWROOM</a>
+        <a href="#contact" onclick="toggleMobileMenu(false)" class="mobile-link opacity-0 text-2xl font-serif text-srk-dark hover:text-srk-wood">CONTACT</a>
+        <a href="#contact" onclick="toggleMobileMenu(false)" class="mobile-btn opacity-0 mt-4 px-10 py-4 bg-srk-dark text-white text-sm font-medium tracking-widest hover:bg-srk-wood transition-colors text-center inline-block">
+            GET A QUOTE
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-24 pb-12 overflow-hidden" data-bgcolor="#F8F8F8">
+        <div class="ambient-glow top-20 left-10"></div>
+        <div class="ambient-glow bottom-20 right-10" style="background: radial-gradient(circle, rgba(160,107,62,0.15) 0%, rgba(255,255,255,0) 70%);"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+            <!-- Text Content -->
+            <div class="hero-content">
+                <span class="block text-sm font-semibold tracking-[0.2em] text-srk-wood mb-4 uppercase g-fade-up">Premium Materials & Finishes</span>
+                <h1 class="text-5xl lg:text-7xl font-serif leading-[1.1] mb-6 g-fade-up">
+                    Elevate Your <br>
+                    <span class="italic text-srk-woodDark">Space</span> Today.
+                </h1>
+                <p class="text-gray-600 max-w-md mb-8 leading-relaxed font-light g-fade-up">
+                    Discover an exclusive range of fluted panels, marble-finish sheets, wooden louvers, and aesthetic ceiling solutions to transform your interiors.
+                </p>
+                <div class="flex gap-4 g-fade-up">
+                    <a href="#collections" class="px-8 py-4 bg-srk-dark text-white font-medium hover:bg-srk-wood transition-colors flex items-center gap-2">
+                        Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-6 mt-16 pt-8 border-t border-gray-200 g-fade-up">
+                    <div>
+                        <h4 class="text-2xl font-serif font-bold text-srk-dark">50+</h4>
+                        <p class="text-xs text-gray-500 tracking-wider uppercase mt-1">Design Options</p>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-serif font-bold text-srk-dark">Premium</h4>
+                        <p class="text-xs text-gray-500 tracking-wider uppercase mt-1">Quality Grade</p>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-serif font-bold text-srk-dark">Expert</h4>
+                        <p class="text-xs text-gray-500 tracking-wider uppercase mt-1">Installation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Image / Composition -->
+            <div class="relative h-[600px] w-full hero-image-container group">
+                <!-- Using picture tag for simulated responsive format handling -->
+                <picture>
+                    <source srcset="pictures/1.png" type="image/png">
+                    <img src="pictures/1.png"
+                        alt="SRK INTERIOR Showroom"
+                        class="absolute inset-0 w-full h-full object-cover rounded-sm img-mask transition-transform duration-700 group-hover:scale-105"
+                        style="transform-origin: center;">
+                </picture>
+                <div class="absolute inset-0 border border-white/20 m-6 pointer-events-none z-10"></div>
+
+                <div class="absolute -bottom-10 -left-10 bg-white p-6 shadow-xl w-64 floating-card z-20">
+                    <div class="flex gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-full bg-srk-wood"></div>
+                        <div class="w-8 h-8 rounded-full bg-srk-dark"></div>
+                        <div class="w-8 h-8 rounded-full bg-gray-300"></div>
+                    </div>
+                    <p class="text-sm font-medium text-gray-800">Endless Textures</p>
+                    <p class="text-xs text-gray-500">Customizable for your walls & ceilings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories / Collections -->
+    <section id="collections" class="py-24 relative" data-bgcolor="#ffffff">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 scroll-anim text-center md:text-left">
+                <div class="max-w-2xl">
+                    <span class="text-srk-wood font-semibold tracking-widest text-sm uppercase mb-3 block">Our Inventory</span>
+                    <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight">Masterpieces for<br>Every Surface.</h2>
+                </div>
+                <div class="flex flex-nowrap overflow-x-auto hide-scrollbar w-full md:w-auto gap-4 mt-8 md:mt-0 font-medium text-xs tracking-widest uppercase filter-btns pb-2 md:pb-0">
+                    <button data-filter="all" class="flex-shrink-0 px-6 py-2 border-b-2 border-srk-wood text-srk-dark transition-all">ALL</button>
+                    <button data-filter="panels" class="flex-shrink-0 px-6 py-2 border-b-2 border-transparent text-gray-400 hover:text-srk-dark transition-all">PANELS</button>
+                    <button data-filter="sheets" class="flex-shrink-0 px-6 py-2 border-b-2 border-transparent text-gray-400 hover:text-srk-dark transition-all">SHEETS</button>
+                    <button data-filter="ceiling" class="flex-shrink-0 px-6 py-2 border-b-2 border-transparent text-gray-400 hover:text-srk-dark transition-all">CEILING</button>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 perspective-lg" id="gallery">
+                <div class="group cursor-pointer scroll-anim collection-card" data-category="panels">
+                    <div class="relative h-96 overflow-hidden rounded-sm mb-6 bg-srk-dark">
+                        <!-- Lazy loaded -->
+                        <img src="pictures/2.png" alt="Fluted Louver TV Panels"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500"></div>
+                    </div>
+                    <h3 class="text-xl font-serif font-semibold mb-2 group-hover:text-srk-wood transition-colors">Fluted Louver TV Panels</h3>
+                    <p class="text-sm text-gray-500">Add depth and warmth to living room walls and TV units.</p>
+                </div>
+
+                <div class="group cursor-pointer scroll-anim collection-card" data-category="sheets">
+                    <div class="relative h-96 overflow-hidden rounded-sm mb-6 bg-srk-dark">
+                        <img src="pictures/3.png" alt="Marble Finish Sheets"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500"></div>
+                    </div>
+                    <h3 class="text-xl font-serif font-semibold mb-2 group-hover:text-srk-wood transition-colors">Marble Finish Sheets</h3>
+                    <p class="text-sm text-gray-500">Luxurious high-gloss finishes for ceilings and premium accent walls.</p>
+                </div>
+
+                <div class="group cursor-pointer scroll-anim collection-card" data-category="ceiling">
+                    <div class="relative h-96 overflow-hidden rounded-sm mb-6 bg-srk-dark">
+                        <img src="pictures/4.png" alt="Ceiling & Lighting Integrations"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500"></div>
+                    </div>
+                    <h3 class="text-xl font-serif font-semibold mb-2 group-hover:text-srk-wood transition-colors">Ceiling Integrations</h3>
+                    <p class="text-sm text-gray-500">Seamless integration of modern strip lights with false ceilings.</p>
+                </div>
+
+                <div class="group cursor-pointer scroll-anim collection-card" data-category="ceiling">
+                    <div class="relative h-96 overflow-hidden rounded-sm mb-6 bg-srk-dark">
+                        <img src="pictures/4.png" alt="Ceiling & Lighting Integrations"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500"></div>
+                    </div>
+                    <h3 class="text-xl font-serif font-semibold mb-2 group-hover:text-srk-wood transition-colors">Ceiling Integrations</h3>
+                    <p class="text-sm text-gray-500">Seamless integration of modern strip lights with false ceilings.</p>
+                </div>
+
+                <div class="group cursor-pointer scroll-anim collection-card" data-category="ceiling">
+                    <div class="relative h-96 overflow-hidden rounded-sm mb-6 bg-srk-dark">
+                        <img src="pictures/4.png" alt="Ceiling & Lighting Integrations"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500"></div>
+                    </div>
+                    <h3 class="text-xl font-serif font-semibold mb-2 group-hover:text-srk-wood transition-colors">Ceiling Integrations</h3>
+                    <p class="text-sm text-gray-500">Seamless integration of modern strip lights with false ceilings.</p>
+                </div>
+
+                <div class="group cursor-pointer scroll-anim collection-card" data-category="ceiling">
+                    <div class="relative h-96 overflow-hidden rounded-sm mb-6 bg-srk-dark">
+                        <img src="pictures/4.png" alt="Ceiling & Lighting Integrations"
+                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500"></div>
+                    </div>
+                    <h3 class="text-xl font-serif font-semibold mb-2 group-hover:text-srk-wood transition-colors">Ceiling Integrations</h3>
+                    <p class="text-sm text-gray-500">Seamless integration of modern strip lights with false ceilings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Before & After Transformation -->
+    <section class="py-24 relative overflow-hidden" data-bgcolor="#F8F8F8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 scroll-anim">
+                <span class="text-srk-wood font-semibold tracking-widest text-sm uppercase mb-3 block">The Transformation</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight mb-4">See the Difference.</h2>
+                <p class="text-gray-500 font-light">Drag the slider to see how our premium wall paneling can completely transform a bland space into a modern luxury interior.</p>
+            </div>
+
+            <!-- The Interactive Slider -->
+            <div class="scroll-anim max-w-5xl mx-auto rounded-sm overflow-hidden shadow-2xl relative">
+                <div class="comparison-slider">
+                    <div class="image-after" style="background-image: url('pictures/5.jpg');"></div>
+                    <div class="image-before" style="background-image: url('pictures/1.png'); filter: grayscale(30%) brightness(0.9);"></div>
+                    
+                    <div class="slider-handle">
+                        <div class="handle-circle">
+                            <i data-lucide="chevrons-left-right" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- Labels -->
+                <div class="absolute bottom-4 left-4 bg-black/50 backdrop-blur-md text-white px-4 py-2 text-xs font-bold tracking-widest uppercase rounded-sm z-10 pointer-events-none">Before</div>
+                <div class="absolute bottom-4 right-4 bg-srk-wood/90 backdrop-blur-md text-white px-4 py-2 text-xs font-bold tracking-widest uppercase rounded-sm z-10 pointer-events-none">After</div>
+            </div>
+        </div>
+    </section>
+    <!-- Process / How It Works -->
+    <section class="py-24" data-bgcolor="#ffffff">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-20 scroll-anim">
+                <span class="text-srk-wood font-semibold tracking-widest text-sm uppercase mb-3 block">Our Process</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight">From Concept to Reality.</h2>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8 relative">
+                <div class="hidden md:block absolute top-10 left-[10%] right-[10%] h-[1px] bg-gray-200 z-0"></div>
+
+                <div class="relative z-10 flex flex-col items-center text-center scroll-anim">
+                    <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
+                        <i data-lucide="message-square" class="w-8 h-8 text-srk-dark group-hover:text-srk-wood transition-colors"></i>
+                    </div>
+                    <div class="text-srk-wood font-bold font-serif text-xl mb-2">01</div>
+                    <h4 class="text-lg font-semibold mb-2">Consultation</h4>
+                    <p class="text-sm text-gray-500 font-light">We discuss your vision, space requirements, and budget constraints.</p>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center text-center scroll-anim" style="transition-delay: 100ms;">
+                    <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
+                        <i data-lucide="layers" class="w-8 h-8 text-srk-dark group-hover:text-srk-wood transition-colors"></i>
+                    </div>
+                    <div class="text-srk-wood font-bold font-serif text-xl mb-2">02</div>
+                    <h4 class="text-lg font-semibold mb-2">Material Selection</h4>
+                    <p class="text-sm text-gray-500 font-light">Choose from our vast physical library of panels, louvers, and sheets.</p>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center text-center scroll-anim" style="transition-delay: 200ms;">
+                    <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
+                        <i data-lucide="box" class="w-8 h-8 text-srk-dark group-hover:text-srk-wood transition-colors"></i>
+                    </div>
+                    <div class="text-srk-wood font-bold font-serif text-xl mb-2">03</div>
+                    <h4 class="text-lg font-semibold mb-2">Custom Fitting</h4>
+                    <p class="text-sm text-gray-500 font-light">Precise measurements are taken to ensure perfect panel cutting and alignment.</p>
+                </div>
+
+                <div class="relative z-10 flex flex-col items-center text-center scroll-anim" style="transition-delay: 300ms;">
+                    <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
+                        <i data-lucide="hammer" class="w-8 h-8 text-srk-dark group-hover:text-srk-wood transition-colors"></i>
+                    </div>
+                    <div class="text-srk-wood font-bold font-serif text-xl mb-2">04</div>
+                    <h4 class="text-lg font-semibold mb-2">Expert Installation</h4>
+                    <p class="text-sm text-gray-500 font-light">Our professional team installs your chosen materials with flawless finish.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects (Real-World Applications) -->
+    <section id="projects" class="py-24 relative" data-bgcolor="#F8F8F8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 scroll-anim">
+                <div class="max-w-2xl">
+                    <span class="text-srk-wood font-semibold tracking-widest text-sm uppercase mb-3 block">Realized Visions</span>
+                    <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight">Featured Projects.</h2>
+                </div>
+                <a href="#contact" class="hidden md:flex items-center gap-2 text-srk-dark font-medium hover:text-srk-wood transition-colors group pb-2 border-b border-transparent hover:border-srk-wood">
+                    Start Your Project <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <!-- Asymmetrical Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[300px]">
+                
+                <!-- Large Featured -->
+                <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-sm scroll-anim cursor-pointer">
+                    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Luxury Living Room" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <span class="text-srk-gold text-xs font-bold tracking-widest uppercase mb-2 block">Residential</span>
+                        <h3 class="text-2xl md:text-3xl font-serif text-white mb-2">The Altamount Residence</h3>
+                        <p class="text-white/70 text-sm max-w-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">Full living room wall paneling using Charcoal Louvers combined with Calacatta Marble UV sheets.</p>
+                    </div>
+                </div>
+
+                <!-- Small Project 1 -->
+                <div class="relative group overflow-hidden rounded-sm scroll-anim cursor-pointer" style="transition-delay: 100ms;">
+                    <img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Modern Office" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="text-srk-wood text-xs font-bold tracking-widest uppercase mb-1 block">Commercial</span>
+                        <h3 class="text-xl font-serif text-white">TechSpace Lobby</h3>
+                    </div>
+                </div>
+
+                <!-- Small Project 2 -->
+                <div class="relative group overflow-hidden rounded-sm scroll-anim cursor-pointer" style="transition-delay: 200ms;">
+                    <img src="https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Master Bedroom" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="text-srk-wood text-xs font-bold tracking-widest uppercase mb-1 block">Residential</span>
+                        <h3 class="text-xl font-serif text-white">Boutique Bedroom</h3>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Showroom Display Section (Dark Theme Trigger) -->
+    <section id="showroom" class="py-24 text-white relative overflow-hidden" data-bgcolor="#111111">
+        <div class="absolute top-10 left-0 whitespace-nowrap text-[15vw] font-serif font-bold text-outline opacity-5 pointer-events-none select-none">
+            SRK INTERIOR
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="grid grid-cols-2 gap-4 showroom-matrix">
+                    <div class="space-y-4 pt-12">
+                        <div class="h-64 bg-gray-800 rounded-sm overflow-hidden image-reveal">
+                            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=1000&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="Texture 1" loading="lazy">
+                        </div>
+                        <div class="h-48 bg-gray-700 rounded-sm overflow-hidden image-reveal">
+                            <div class="w-full h-full bg-srk-woodDark bg-opacity-80 flex items-center justify-center p-4 text-center">
+                                <p class="font-serif italic text-sm text-srk-gold">"Quality is not an act, it is a habit."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="h-48 bg-gray-700 rounded-sm overflow-hidden image-reveal">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop"
+                                class="w-full h-full object-cover" alt="Texture 2" loading="lazy">
+                        </div>
+                        <div class="h-64 bg-gray-800 rounded-sm overflow-hidden image-reveal">
+                            <img src="https://images.unsplash.com/photo-1546484396-fb3fc6f95f98?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover" alt="Texture 3" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="showroom-content">
+                    <h2 class="text-4xl md:text-5xl font-serif leading-tight mb-6">Experience the showroom aesthetics in real life.</h2>
+                    <p class="text-gray-400 mb-8 font-light leading-relaxed">
+                        Our physical store offers a massive gallery of textures, from high-density PVC fluted panels to UV-coated marble sheets. Feel the textures, observe the light reflections, and choose the perfect combination for your architecture.
+                    </p>
+
+                    <ul class="space-y-4 mb-10">
+                        <li class="flex items-center gap-3 text-sm text-gray-300">
+                            <div class="w-5 h-5 rounded-full bg-srk-gold/20 flex items-center justify-center">
+                                <i data-lucide="check" class="w-3 h-3 text-srk-gold"></i>
+                            </div>
+                            Hundreds of physical samples available
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-gray-300">
+                            <div class="w-5 h-5 rounded-full bg-srk-gold/20 flex items-center justify-center">
+                                <i data-lucide="check" class="w-3 h-3 text-srk-gold"></i>
+                            </div>
+                            Custom sizing and cutting services
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-gray-300">
+                            <div class="w-5 h-5 rounded-full bg-srk-gold/20 flex items-center justify-center">
+                                <i data-lucide="check" class="w-3 h-3 text-srk-gold"></i>
+                            </div>
+                            Expert consultation for color matching
+                        </li>
+                    </ul>
+
+                    <a href="https://maps.google.com" target="_blank" class="inline-block px-8 py-4 bg-white text-srk-dark font-medium hover:bg-srk-gold hover:text-white transition-all duration-300">
+                        Visit Our Store
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials / Social Proof -->
+    <section class="py-24 border-b border-gray-100" data-bgcolor="#ffffff">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16 scroll-anim">
+                <span class="text-srk-wood font-semibold tracking-widest text-sm uppercase mb-3 block">Client Stories</span>
+                <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight">Trusted by Homeowners & Architects.</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-[#F8F8F8] p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow scroll-anim relative">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-gray-200"></i>
+                    <div class="flex text-srk-gold mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-600 font-light leading-relaxed mb-6 italic">
+                        "The quality of the charcoal fluted panels we bought for our media room is unmatched. The installation team was professional and finished the job in one day without any mess."
+                    </p>
+                    <div>
+                        <h4 class="font-serif font-bold text-srk-dark">Rajesh Verma</h4>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Homeowner</p>
+                    </div>
+                </div>
+
+                <div class="bg-srk-dark text-white p-8 rounded-sm shadow-lg scroll-anim relative transform md:-translate-y-4">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-white/10"></i>
+                    <div class="flex text-srk-gold mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-300 font-light leading-relaxed mb-6 italic">
+                        "As an interior designer, I am very particular about material finish. SRK Interior has the best range of UV Marble sheets in the city. They have become my go-to vendor."
+                    </p>
+                    <div>
+                        <h4 class="font-serif font-bold text-white">Ananya Desai</h4>
+                        <p class="text-xs text-srk-gold uppercase tracking-wider mt-1">Lead Architect, AD Design</p>
+                    </div>
+                </div>
+
+                <div class="bg-[#F8F8F8] p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow scroll-anim relative">
+                    <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-gray-200"></i>
+                    <div class="flex text-srk-gold mb-4">
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                    </div>
+                    <p class="text-gray-600 font-light leading-relaxed mb-6 italic">
+                        "Transformed our office reception beautifully. The wooden louvers look premium and the acoustic benefits were a surprising bonus. Highly recommend their services."
+                    </p>
+                    <div>
+                        <h4 class="font-serif font-bold text-srk-dark">Vikram Singh</h4>
+                        <p class="text-xs text-gray-500 uppercase tracking-wider mt-1">Corporate Client</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scrolling Text Marquee -->
+    <div class="bg-srk-wood py-4 overflow-hidden flex whitespace-nowrap border-y border-srk-woodDark">
+        <div class="marquee-content flex gap-12 items-center text-white/90 font-serif text-xl tracking-widest uppercase">
+            <span>SRK INTERIOR</span> <span>•</span>
+            <span>Premium Fluted Panels</span> <span>•</span>
+            <span>UV Marble Sheets</span> <span>•</span>
+            <span>Wooden Louvers</span> <span>•</span>
+            <span>False Ceilings</span> <span>•</span>
+            <span>Ambient Lighting</span> <span>•</span>
+            <span>SRK INTERIOR</span> <span>•</span>
+            <span>Premium Fluted Panels</span> <span>•</span>
+            <span>UV Marble Sheets</span> <span>•</span>
+            <span>Wooden Louvers</span> <span>•</span>
+            <span>False Ceilings</span> <span>•</span>
+            <span>Ambient Lighting</span> <span>•</span>
+        </div>
+    </div>
+
+    <!-- Contact CTA Section -->
+    <section id="contact" class="py-24" data-bgcolor="#ffffff">
+        <div class="max-w-4xl mx-auto px-6 text-center scroll-anim">
+            <i data-lucide="map-pin" class="w-10 h-10 mx-auto text-srk-wood mb-6"></i>
+            <h2 class="text-4xl font-serif text-srk-dark mb-6">Ready to upgrade your interior?</h2>
+            <p class="text-gray-500 mb-10 max-w-xl mx-auto font-light">
+                Drop by our showroom or give us a call. Let our experts guide you through the best materials and designs for your specific requirements.
+            </p>
+            <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
+                <a href="tel:+910000000000" class="px-8 py-4 bg-srk-dark text-white font-medium hover:bg-srk-wood transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-1">
+                    <i data-lucide="phone" class="w-5 h-5"></i> Call Us Now
+                </a>
+                <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-[#25D366] text-white font-medium hover:bg-[#128C7E] transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-1">
+                    <i data-lucide="message-circle" class="w-5 h-5"></i> Send an Inquiry
+                </a>
+                <a href="https://maps.app.goo.gl/yourlocation" target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-white border-2 border-srk-dark text-srk-dark font-medium hover:bg-srk-dark hover:text-white transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg hover:-translate-y-1">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i> Location
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp Button (FAB) -->
+    <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" 
+       class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group">
+        <i data-lucide="message-circle" class="w-7 h-7"></i>
+        <span class="absolute right-full top-1/2 -translate-y-1/2 mr-4 bg-white text-srk-dark text-xs font-bold px-3 py-1.5 rounded shadow-sm opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+            Chat with us
+        </span>
+    </a>
+
+    <!-- Footer -->
+    <footer class="relative bg-srk-dark text-white/70 pt-32 pb-12 overflow-hidden border-t border-white/5">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-srk-wood/20 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-srk-gold/10 rounded-full blur-[150px] pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mb-24 relative z-10 text-center md:text-left scroll-anim">
+            <h2 class="text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-6 leading-[1.1]">Let's craft <br><span class="text-srk-wood italic pr-4">brilliance.</span></h2>
+            <p class="font-light max-w-xl text-lg text-white/50">Your space deserves the extraordinary. Connect with us to begin your journey toward unparalleled interior aesthetics.</p>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:grid md:grid-cols-12 gap-16 relative z-10 scroll-anim">
+            <div class="hidden md:block md:col-span-5">
+                <div class="text-3xl md:text-6xl font-serif font-bold tracking-wider flex items-center justify-center md:justify-start gap-4 text-white mb-6 hover:scale-105 transition-transform origin-left w-fit cursor-pointer">
+                    <img src="pictures/logo.png" alt="SRK INTERIOR" class="h-12 md:h-20 w-auto filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+                    <div>
+                        SRK <span class="text-srk-wood block text-sm md:text-xl tracking-[0.3em] font-sans mt-1">INTERIOR</span>
+                    </div>
+                </div>
+                <p class="text-sm md:text-xl max-w-sm md:max-w-lg font-light leading-relaxed mx-auto md:mx-0 text-center md:text-left text-white/60">
+                    Transforming standard architecture into masterpieces. We source and install the finest panels, louvers, and sheets for your visionary projects.
+                </p>
+            </div>
+
+            <div class="md:col-span-3 md:col-start-8 flex flex-col items-center md:items-start text-sm md:text-xl font-light order-1 md:order-none">
+                <h4 class="text-white font-medium tracking-widest uppercase mb-4 md:mb-4 text-xs md:text-base">Explore</h4>
+                <div class="flex flex-col gap-4">
+                    <a href="#home" class="hover:text-srk-wood transition-colors w-fit group flex items-center gap-3">
+                        <span class="w-0 group-hover:w-6 h-px bg-srk-wood transition-all duration-500"></span> Home
+                    </a>
+                    <a href="#collections" class="hover:text-srk-wood transition-colors w-fit group flex items-center gap-3">
+                         <span class="w-0 group-hover:w-6 h-px bg-srk-wood transition-all duration-500"></span> Collections
+                    </a>
+                    <a href="#projects" class="hover:text-srk-wood transition-colors w-fit group flex items-center gap-3">
+                        <span class="w-0 group-hover:w-6 h-px bg-srk-wood transition-all duration-500"></span> Projects
+                   </a>
+                    <a href="#showroom" class="hover:text-srk-wood transition-colors w-fit group flex items-center gap-3">
+                         <span class="w-0 group-hover:w-6 h-px bg-srk-wood transition-all duration-500"></span> Showroom
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 text-center md:text-left order-3 md:order-none">
+                <h4 class="text-white font-medium tracking-widest uppercase mb-6 text-xs md:text-base">Connect</h4>
+                <div class="flex gap-4 justify-center md:justify-start">
+                    <a href="#" target="_blank" rel="noopener noreferrer"
+                        class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-srk-wood hover:border-srk-wood text-white transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(160,107,62,0.2)]">
+                        <i data-lucide="instagram" class="w-5 h-5 md:w-6 md:h-6"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 md:w-16 md:h-16 rounded-full border border-white/10 flex items-center justify-center hover:bg-srk-wood hover:border-srk-wood text-white transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_20px_rgba(160,107,62,0.2)]">
+                        <i data-lucide="facebook" class="w-5 h-5 md:w-6 md:h-6"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="md:hidden order-2 flex flex-col items-center justify-center w-full py-8">
+                <div class="flex flex-col items-center gap-4 text-5xl font-serif font-bold leading-none whitespace-nowrap text-white text-center">
+                    <img src="pictures/logo.png" alt="SRK INTERIOR Logo" class="h-auto w-[40vw] max-w-[400px] object-contain">
+                    <div>SRK <span class="text-srk-wood">INTERIOR</span></div>
+                </div>
+                <div class="w-16 h-px bg-srk-wood mt-6"></div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-32 relative z-20 flex flex-col md:flex-row justify-between items-center border-t border-white/20 pt-10">
+            <div class="text-sm text-gray-400 font-light mb-4 md:mb-0">
+                &copy; 2026 SRK INTERIOR. All rights reserved.
+            </div>
+            <div class="text-sm text-gray-400 font-light flex gap-8">
+                <button onclick="openModal('privacy-modal')" class="hover:text-white transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-white after:transition-all after:duration-300 hover:after:w-full font-medium">Privacy Policy</button>
+                <button onclick="openModal('terms-modal')" class="hover:text-white transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-px after:bg-white after:transition-all after:duration-300 hover:after:w-full font-medium">Terms of Service</button>
+            </div>
+        </div>
+        
+        <div class="hidden md:flex absolute bottom-0 left-1/2 -translate-x-1/2 flex-col items-center justify-center opacity-[0.03] pointer-events-none select-none z-0 w-full pb-4">
+            <div class="text-[12vw] font-serif font-bold leading-none whitespace-nowrap">
+                SRK <span class="text-srk-wood">INTERIOR</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-modal" class="fixed inset-0 z-[100] hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-6">
+        <div class="bg-white max-w-2xl w-full max-h-[80vh] overflow-y-auto rounded-sm p-8 relative scroll-anim">
+            <button onclick="closeModal('privacy-modal')" class="absolute top-4 right-4 text-srk-dark">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-3xl font-serif mb-6 text-srk-dark">Privacy Policy</h2>
+            <div class="space-y-4 text-gray-600 font-light leading-relaxed">
+                <p><strong>1. Information Collection:</strong> At SRK INTERIOR, we collect basic information like name and phone number only when you voluntarily provide it for a quote or inquiry.</p>
+                <p><strong>2. Usage:</strong> This data is used solely to respond to your inquiries and provide our interior design services.</p>
+                <p><strong>3. Protection:</strong> We implement security measures to maintain the safety of your personal information. We do not sell your data to outside parties.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-modal" class="fixed inset-0 z-[100] hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-6">
+        <div class="bg-white max-w-2xl w-full max-h-[80vh] overflow-y-auto rounded-sm p-8 relative scroll-anim">
+            <button onclick="closeModal('terms-modal')" class="absolute top-4 right-4 text-srk-dark">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 class="text-3xl font-serif mb-6 text-srk-dark">Terms of Service</h2>
+            <div class="space-y-4 text-gray-600 font-light leading-relaxed">
+                <p><strong>1. Services:</strong> SRK INTERIOR provides premium wall and ceiling design solutions, including fluted panels, marble sheets, and louver installation.</p>
+                <p><strong>2. Quotations:</strong> All quotes provided are estimates. Final pricing is subject to site measurements and customization requirements.</p>
+                <p><strong>3. Liability:</strong> SRK INTERIOR is not liable for indirect or consequential losses resulting from the use of our services.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animations & Logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // --- HERO ANIMATIONS ---
+            const heroTimeline = gsap.timeline();
+            heroTimeline.fromTo(".img-mask",
+                { clipPath: "polygon(0 0, 100% 0, 100% 0, 0 0)", scale: 1.3, filter: "blur(15px)" },
+                { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)", scale: 1, filter: "blur(0px)", duration: 2, ease: "power4.inOut" }
+            );
+
+            heroTimeline.fromTo(".g-fade-up",
+                { y: 80, opacity: 0, skewY: 4 },
+                { y: 0, opacity: 1, skewY: 0, duration: 1.2, stagger: 0.15, ease: "expo.out" },
+                "-=1.5"
+            );
+
+            heroTimeline.fromTo(".floating-card",
+                { y: 80, opacity: 0, rotation: -15, scale: 0.8 },
+                { y: 0, opacity: 1, rotation: 0, scale: 1, duration: 1.5, ease: "elastic.out(1, 0.6)" },
+                "-=1.1"
+            );
+
+            gsap.to(".floating-card", { y: -18, rotation: 3, duration: 3.5, repeat: -1, yoyo: true, ease: "sine.inOut" });
+
+            gsap.to(".img-mask", {
+                yPercent: 12, ease: "none",
+                scrollTrigger: { trigger: "#home", start: "top top", end: "bottom top", scrub: 1 } // Added smoothing value
+            });
+
+            // --- SCROLL ANIMATIONS ---
+            gsap.utils.toArray('.scroll-anim').forEach(element => {
+                gsap.fromTo(element,
+                    { y: 80, opacity: 0, scale: 0.96 },
+                    {
+                        scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play reverse play reverse" },
+                        y: 0, opacity: 1, scale: 1, duration: 1.2, ease: "power3.out"
+                    }
+                );
+            });
+
+            gsap.utils.toArray('.image-reveal').forEach((element, i) => {
+                const xOffset = i % 2 === 0 ? -40 : 40;
+                gsap.fromTo(element,
+                    { x: xOffset, y: 40, scale: 0.8, opacity: 0, rotation: i % 2 === 0 ? -12 : 12 },
+                    {
+                        scrollTrigger: { trigger: ".showroom-matrix", start: "top 75%", toggleActions: "play reverse play reverse" },
+                        x: 0, y: 0, scale: 1, opacity: 1, rotation: 0, duration: 1.5, delay: i * 0.15, ease: "elastic.out(1, 0.7)"
+                    }
+                );
+            });
+
+            gsap.to(".marquee-content", { xPercent: -50, ease: "none", duration: 25, repeat: -1 });
+
+            // --- DYNAMIC BACKGROUND & NAV THEME SWITCHER ---
+            function applyTheme(color) {
+                document.body.style.backgroundColor = color;
+                const nav = document.getElementById('navbar');
+                if(color === "#111111") {
+                    nav.classList.add('nav-dark');
+                    nav.classList.remove('nav-light');
+                } else {
+                    nav.classList.add('nav-light');
+                    nav.classList.remove('nav-dark');
+                }
+            }
+
+            gsap.utils.toArray('[data-bgcolor]').forEach(sec => {
+                ScrollTrigger.create({
+                    trigger: sec,
+                    start: "top 50%",
+                    end: "bottom 50%",
+                    onEnter: () => applyTheme(sec.dataset.bgcolor),
+                    onEnterBack: () => applyTheme(sec.dataset.bgcolor)
+                });
+            });
+
+            // --- THROTTLED NAVBAR SCROLL STATE ---
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        const nav = document.getElementById('navbar');
+                        if (window.scrollY > 50) {
+                            nav.classList.add('scrolled');
+                        } else {
+                            nav.classList.remove('scrolled');
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            // --- FAQ ACCORDION LOGIC ---
+            const faqBtns = document.querySelectorAll('.faq-btn');
+            faqBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const content = btn.nextElementSibling;
+                    const icon = btn.querySelector('i');
+                    
+                    // Close other items
+                    document.querySelectorAll('.faq-content').forEach(otherContent => {
+                        if (otherContent !== content) {
+                            otherContent.style.maxHeight = null;
+                            otherContent.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
+                        }
+                    });
+
+                    // Toggle current item
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            // --- Before/After Slider Logic ---
+            const slider = document.querySelector('.comparison-slider');
+            if (slider) {
+                const before = slider.querySelector('.image-before');
+                const handle = slider.querySelector('.slider-handle');
+                let isDragging = false;
+
+                const startMove = (e) => {
+                    isDragging = true;
+                    slider.style.cursor = 'ew-resize';
+                };
+
+                const stopMove = () => {
+                    isDragging = false;
+                };
+
+                const move = (e) => {
+                    if (!isDragging) return;
+                    let x = e.clientX || (e.touches && e.touches[0].clientX);
+                    if (!x) return;
+                    
+                    const rect = slider.getBoundingClientRect();
+                    let position = ((x - rect.left) / rect.width) * 100;
+                    
+                    if (position < 0) position = 0;
+                    if (position > 100) position = 100;
+                    
+                    before.style.clipPath = `inset(0 ${100 - position}% 0 0)`;
+                    handle.style.left = `${position}%`;
+                };
+
+                slider.addEventListener('mousedown', startMove);
+                slider.addEventListener('touchstart', startMove, { passive: true });
+                window.addEventListener('mousemove', move);
+                window.addEventListener('touchmove', move, { passive: true }); // CRITICAL: Fixes scroll blocking on mobile
+                window.addEventListener('mouseup', stopMove);
+                window.addEventListener('touchend', stopMove);
+            }
+
+            // --- Filterable Gallery ---
+            const filterBtns = document.querySelectorAll('.filter-btns button');
+            const galleryItems = document.querySelectorAll('#gallery > div');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => {
+                        b.classList.remove('border-srk-wood', 'text-srk-dark');
+                        b.classList.add('border-transparent', 'text-gray-400');
+                    });
+                    btn.classList.add('border-srk-wood', 'text-srk-dark');
+                    btn.classList.remove('border-transparent', 'text-gray-400');
+
+                    const filter = btn.getAttribute('data-filter');
+
+                    gsap.to(galleryItems, {
+                        scale: 0.8, opacity: 0, duration: 0.3, stagger: 0.05,
+                        onComplete: () => {
+                            galleryItems.forEach(item => {
+                                const cat = item.getAttribute('data-category');
+                                if (filter === 'all' || cat === filter) {
+                                    item.style.display = 'block';
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                            gsap.to(galleryItems, { scale: 1, opacity: 1, duration: 0.5, stagger: 0.05 });
+                        }
+                    });
+                });
+            });
+        });
+
+        // ─── Custom Cursor Logic ──────────────────────────────────────
+        (function () {
+            if (window.innerWidth < 1024) return;
+
+            const dot  = document.getElementById('cursor-dot');
+            const ring = document.getElementById('cursor-ring');
+            if (!dot || !ring) return;
+
+            let mouseX = window.innerWidth  / 2;
+            let mouseY = window.innerHeight / 2;
+            let ringX  = mouseX;
+            let ringY  = mouseY;
+
+            document.addEventListener('mousemove', e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                // Using hardware accelerated translate3d instead of standard left/top to avoid layout thrashing
+                dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            });
+
+            function animateRing() {
+                ringX += (mouseX - ringX) * 0.12;
+                ringY += (mouseY - ringY) * 0.12;
+                
+                // Using hardware accelerated translate3d
+                ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+                requestAnimationFrame(animateRing);
+            }
+            animateRing();
+
+            const hoverTargets = 'a, button, [class*="cursor-pointer"], input, select, textarea, label, .comparison-slider, .faq-btn';
+            document.querySelectorAll(hoverTargets).forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            });
+
+            document.addEventListener('mouseleave', () => { dot.style.opacity  = '0'; ring.style.opacity = '0'; });
+            document.addEventListener('mouseenter', () => { dot.style.opacity  = '1'; ring.style.opacity = '1'; });
+        })();
+
+        // ─── Mobile Menu Toggle Logic ────────────────────────────────
+        function toggleMobileMenu(open) {
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) {
+                if (open) {
+                    mobileMenu.classList.remove('translate-x-full');
+                    document.body.style.overflow = 'hidden';
+                    gsap.killTweensOf(['#mobile-menu-logo', '.mobile-link', '.mobile-btn']);
+
+                    gsap.fromTo("#mobile-menu-logo",
+                        { opacity: 0, y: -20, scale: 0.95 },
+                        { opacity: 1, y: 0, scale: 1, duration: 0.6, delay: 0.3, ease: "back.out(1.5)" }
+                    );
+
+                    gsap.fromTo(".mobile-link",
+                        { opacity: 0, y: 30 },
+                        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, delay: 0.4, ease: "power3.out" }
+                    );
+
+                    gsap.fromTo(".mobile-btn",
+                        { opacity: 0, scale: 0.9, y: 20 },
+                        { opacity: 1, scale: 1, y: 0, duration: 0.5, delay: 0.8, ease: "elastic.out(1, 0.7)" }
+                    );
+                } else {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.style.overflow = '';
+                    gsap.set(['#mobile-menu-logo', '.mobile-link', '.mobile-btn'], { opacity: 0 });
+                }
+            }
+        }
+
+        // ─── Privacy/Terms Modals Logic ──────────────────────────────
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                gsap.fromTo(modal.children[0], 
+                    { scale: 0.9, opacity: 0, y: 20 },
+                    { scale: 1, opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+                );
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                gsap.to(modal.children[0], {
+                    scale: 0.9, opacity: 0, y: 20, duration: 0.3, ease: "power2.in",
+                    onComplete: () => {
+                        modal.classList.add('hidden');
+                        document.body.style.overflow = '';
+                    }
+                });
+            }
+        }
+
+        window.onclick = function(event) {
+            if (event.target.id === 'privacy-modal' || event.target.id === 'terms-modal') {
+                closeModal(event.target.id);
+            }
+        }
+    </script>
+</body>
+</html>
