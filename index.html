@@ -77,21 +77,19 @@
         }
 
         /* Hardware acceleration for scroll elements */
-        .scroll-anim, .image-reveal {
-            will-change: transform, opacity;
-        }
+        /* Removed will-change to save mobile GPU memory */
 
         /* Glass Nav & Theme States */
         .glass-nav {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            transform: translateZ(0); /* Forces GPU hardware acceleration for mobile */
+            /* transform: translateZ(0); Removed to prevent mobile rendering bug with backdrop-filter */
         }
         
         #navbar {
             transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
             border-bottom: 1px solid transparent;
-            will-change: background-color, box-shadow; /* Performance optimization */
+            /* Removed will-change for performance optimization */
         }
         
         /* Light Theme Nav */
@@ -158,7 +156,6 @@
 
         .img-mask {
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-            will-change: transform, clip-path; /* Performance optimization */
         }
 
         /* ─── Custom Cursor (Desktop Only) ─────────────────────────── */
@@ -174,7 +171,6 @@
                 background: #D4AF37; border-radius: 50%; pointer-events: none;
                 z-index: 99999; transform: translate(-50%, -50%); /* Base transform */
                 transition: width 0.2s, height 0.2s, background 0.2s; display: block;
-                will-change: transform; /* Performance optimization */
             }
 
             #cursor-ring {
@@ -183,7 +179,6 @@
                 pointer-events: none; z-index: 99998; transform: translate(-50%, -50%); /* Base transform */
                 transition: width 0.35s ease, height 0.35s ease, border-color 0.35s ease;
                 backdrop-filter: invert(5%); display: block;
-                will-change: transform; /* Performance optimization */
             }
 
             body.cursor-hover #cursor-dot {
@@ -208,20 +203,86 @@
         .comparison-slider .image-before {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-size: cover; background-position: center; clip-path: inset(0 50% 0 0);
-            will-change: clip-path;
         }
 
         .slider-handle {
             position: absolute; top: 0; left: 50%; width: 2px; height: 100%;
             background: white; transform: translateX(-50%); display: flex;
             align-items: center; justify-content: center; pointer-events: none;
-            will-change: left;
         }
 
         .handle-circle {
             width: 48px; height: 48px; background: white; border: 4px solid #D4AF37;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             color: #111111; box-shadow: 0 4px 20px rgba(0,0,0,0.3); pointer-events: auto;
+        }
+
+        /* ─── Star Border Button ──────────────────────────────────── */
+        .star-border-container {
+            display: inline-block;
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            padding: 1px; /* Ensures the animated borders show as a 1px border */
+        }
+
+        .border-gradient-bottom {
+            position: absolute;
+            width: 300%;
+            height: 50%;
+            opacity: 0.7;
+            bottom: -12px;
+            right: -250%;
+            border-radius: 50%;
+            animation: star-movement-bottom 3s linear infinite alternate;
+            z-index: 0;
+            background: linear-gradient(to right, transparent, #D4AF37, transparent);
+        }
+
+        .border-gradient-top {
+            position: absolute;
+            opacity: 0.7;
+            width: 300%;
+            height: 50%;
+            top: -12px;
+            left: -250%;
+            border-radius: 50%;
+            animation: star-movement-top 3s linear infinite alternate;
+            z-index: 0;
+            background: linear-gradient(to right, transparent, #ffffff, transparent);
+        }
+
+        .inner-content {
+            position: relative;
+            border: 1px solid #222;
+            background: #111111; /* Matching srk-dark */
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            padding: 16px 26px;
+            border-radius: 20px;
+            z-index: 1;
+        }
+
+        @keyframes star-movement-bottom {
+            0% { transform: translate(0%, 0%); opacity: 1; }
+            100% { transform: translate(-100%, 0%); opacity: 0; }
+        }
+
+        @keyframes star-movement-top {
+            0% { transform: translate(0%, 0%); opacity: 1; }
+            100% { transform: translate(100%, 0%); opacity: 0; }
+        }
+
+        /* ─── WebGL Particles Container ────────────────────────────── */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none; /* Let clicks pass through to content */
         }
     </style>
 </head>
@@ -297,8 +358,12 @@
                     Discover an exclusive range of fluted panels, marble-finish sheets, wooden louvers, and aesthetic ceiling solutions to transform your interiors.
                 </p>
                 <div class="flex gap-4 g-fade-up">
-                    <a href="#collections" class="px-8 py-4 bg-srk-dark text-white font-medium hover:bg-srk-wood transition-colors flex items-center gap-2">
-                        Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <a href="#collections" class="star-border-container group">
+                        <div class="border-gradient-bottom"></div>
+                        <div class="border-gradient-top"></div>
+                        <div class="inner-content flex items-center justify-center gap-2 font-medium group-hover:bg-srk-wood transition-colors">
+                            Explore Collection <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </div>
                     </a>
                 </div>
 
@@ -505,7 +570,7 @@
     <!-- Featured Projects (Real-World Applications) -->
     <section id="projects" class="py-24 relative" data-bgcolor="#F8F8F8">
         <div class="max-w-7xl mx-auto px-6 lg:px-12">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 scroll-anim">
+            <div class="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 scroll-anim text-center md:text-left">
                 <div class="max-w-2xl">
                     <span class="text-srk-wood font-semibold tracking-widest text-sm uppercase mb-3 block">Realized Visions</span>
                     <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight">Featured Projects.</h2>
@@ -554,8 +619,11 @@
     </section>
 
     <!-- Showroom Display Section (Dark Theme Trigger) -->
-    <section id="showroom" class="py-24 text-white relative overflow-hidden" data-bgcolor="#111111">
-        <div class="absolute top-10 left-0 whitespace-nowrap text-[15vw] font-serif font-bold text-outline opacity-5 pointer-events-none select-none">
+    <section id="showroom" class="py-24 text-white relative overflow-hidden bg-black" data-bgcolor="#000000">
+        <!-- Interactive WebGL Particles Background -->
+        <div id="particles-container-showroom" class="particles-container"></div>
+
+        <div class="absolute top-10 left-0 whitespace-nowrap text-[15vw] font-serif font-bold text-outline opacity-5 pointer-events-none select-none z-10">
             SRK INTERIOR
         </div>
 
@@ -940,7 +1008,7 @@
                     });
                     ticking = true;
                 }
-            });
+            }, { passive: true });
 
             // --- FAQ ACCORDION LOGIC ---
             const faqBtns = document.querySelectorAll('.faq-btn');
@@ -1143,6 +1211,219 @@
                 closeModal(event.target.id);
             }
         }
+    </script>
+    <script type="module">
+        import { Renderer, Camera, Geometry, Program, Mesh } from 'https://cdn.jsdelivr.net/npm/ogl@0.0.117/dist/ogl.mjs';
+
+        const defaultColors = ['#ffffff', '#ffffff', '#ffffff'];
+
+        const hexToRgb = hex => {
+            hex = hex.replace(/^#/, '');
+            if (hex.length === 3) {
+                hex = hex.split('').map(c => c + c).join('');
+            }
+            const int = parseInt(hex, 16);
+            const r = ((int >> 16) & 255) / 255;
+            const g = ((int >> 8) & 255) / 255;
+            const b = (int & 255) / 255;
+            return [r, g, b];
+        };
+
+        const vertex = /* glsl */ `
+            attribute vec3 position;
+            attribute vec4 random;
+            attribute vec3 color;
+            
+            uniform mat4 modelMatrix;
+            uniform mat4 viewMatrix;
+            uniform mat4 projectionMatrix;
+            uniform float uTime;
+            uniform float uSpread;
+            uniform float uBaseSize;
+            uniform float uSizeRandomness;
+            
+            varying vec4 vRandom;
+            varying vec3 vColor;
+            
+            void main() {
+                vRandom = random;
+                vColor = color;
+                
+                vec3 pos = position * uSpread;
+                pos.z *= 10.0;
+                
+                vec4 mPos = modelMatrix * vec4(pos, 1.0);
+                float t = uTime;
+                mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.1, 1.5, random.x);
+                mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.1, 1.5, random.w);
+                mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.1, 1.5, random.z);
+                
+                vec4 mvPos = viewMatrix * mPos;
+
+                if (uSizeRandomness == 0.0) {
+                    gl_PointSize = uBaseSize;
+                } else {
+                    gl_PointSize = (uBaseSize * (1.0 + uSizeRandomness * (random.x - 0.5))) / length(mvPos.xyz);
+                }
+
+                gl_Position = projectionMatrix * mvPos;
+            }
+        `;
+
+        const fragment = /* glsl */ `
+            precision highp float;
+            
+            uniform float uTime;
+            uniform float uAlphaParticles;
+            varying vec4 vRandom;
+            varying vec3 vColor;
+            
+            void main() {
+                vec2 uv = gl_PointCoord.xy;
+                float d = length(uv - vec2(0.5));
+                
+                if(uAlphaParticles < 0.5) {
+                    if(d > 0.5) { discard; }
+                    gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
+                } else {
+                    float circle = smoothstep(0.5, 0.4, d) * 0.8;
+                    gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle);
+                }
+            }
+        `;
+
+        function initParticles(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // Optional settings map replacing props
+            const particleCount = 200;
+            const particleSpread = 10;
+            const speed = 0.1;
+            const particleColors = ['#D4AF37', '#ffffff', '#A06B3E']; // matching interior theme colors
+            const moveParticlesOnHover = true;
+            const particleHoverFactor = 1;
+            const alphaParticles = true;
+            const particleBaseSize = 100;
+            const sizeRandomness = 1.2;
+            const cameraDistance = 25;
+            const disableRotation = false;
+            const pixelRatio = window.devicePixelRatio || 1;
+
+            const renderer = new Renderer({
+                dpr: pixelRatio,
+                depth: false,
+                alpha: true
+            });
+            const gl = renderer.gl;
+            container.appendChild(gl.canvas);
+            gl.clearColor(0, 0, 0, 0);
+
+            const camera = new Camera(gl, { fov: 15 });
+            camera.position.set(0, 0, cameraDistance);
+
+            const resize = () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                renderer.setSize(width, height);
+                camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+            };
+            window.addEventListener('resize', resize, false);
+            resize();
+
+            let mouse = { x: 0, y: 0 };
+            const handleMouseMove = e => {
+                const rect = container.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+                const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+                mouse = { x, y };
+            };
+
+            if (moveParticlesOnHover) {
+                // Tracking mouse over the section itself, so interactivity feels unified
+                const parentSection = container.closest('section');
+                (parentSection || container).addEventListener('mousemove', handleMouseMove);
+            }
+
+            const count = particleCount;
+            const positions = new Float32Array(count * 3);
+            const randoms = new Float32Array(count * 4);
+            const colors = new Float32Array(count * 3);
+            const palette = particleColors && particleColors.length > 0 ? particleColors : defaultColors;
+
+            for (let i = 0; i < count; i++) {
+                let x, y, z, len;
+                do {
+                    x = Math.random() * 2 - 1;
+                    y = Math.random() * 2 - 1;
+                    z = Math.random() * 2 - 1;
+                    len = x * x + y * y + z * z;
+                } while (len > 1 || len === 0);
+                const r = Math.cbrt(Math.random());
+                positions.set([x * r, y * r, z * r], i * 3);
+                randoms.set([Math.random(), Math.random(), Math.random(), Math.random()], i * 4);
+                const col = hexToRgb(palette[Math.floor(Math.random() * palette.length)]);
+                colors.set(col, i * 3);
+            }
+
+            const geometry = new Geometry(gl, {
+                position: { size: 3, data: positions },
+                random: { size: 4, data: randoms },
+                color: { size: 3, data: colors }
+            });
+
+            const program = new Program(gl, {
+                vertex,
+                fragment,
+                uniforms: {
+                    uTime: { value: 0 },
+                    uSpread: { value: particleSpread },
+                    uBaseSize: { value: particleBaseSize * pixelRatio },
+                    uSizeRandomness: { value: sizeRandomness },
+                    uAlphaParticles: { value: alphaParticles ? 1 : 0 }
+                },
+                transparent: true,
+                depthTest: false
+            });
+
+            const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
+
+            let animationFrameId;
+            let lastTime = performance.now();
+            let elapsed = 0;
+
+            const update = t => {
+                animationFrameId = requestAnimationFrame(update);
+                const delta = t - lastTime;
+                lastTime = t;
+                elapsed += delta * speed;
+
+                program.uniforms.uTime.value = elapsed * 0.001;
+
+                if (moveParticlesOnHover) {
+                    particles.position.x += (-mouse.x * particleHoverFactor - particles.position.x) * 0.1;
+                    particles.position.y += (-mouse.y * particleHoverFactor - particles.position.y) * 0.1;
+                } else {
+                    particles.position.x = 0;
+                    particles.position.y = 0;
+                }
+
+                if (!disableRotation) {
+                    particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1;
+                    particles.rotation.y = Math.cos(elapsed * 0.0005) * 0.15;
+                    particles.rotation.z += 0.01 * speed;
+                }
+
+                renderer.render({ scene: particles, camera });
+            };
+
+            animationFrameId = requestAnimationFrame(update);
+        }
+
+        // Initialize when ready
+        document.addEventListener("DOMContentLoaded", () => {
+            initParticles('particles-container-showroom');
+        });
     </script>
 </body>
 </html>
