@@ -68,10 +68,14 @@
 
     <style>
         /* Custom Styles & Utilities (In production, extract to global.css) */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
             background-color: #F8F8F8;
             color: #111111;
-            overflow-x: hidden;
             transition: background-color 0.6s ease;
             /* Removed will-change to save mobile memory */
         }
@@ -191,8 +195,14 @@
         
         /* ─── Before/After Slider ───────────────────────────────────── */
         .comparison-slider {
-            position: relative; width: 100%; height: 600px;
+            position: relative; width: 100%; height: 400px;
             overflow: hidden; cursor: ew-resize !important;
+        }
+        @media (min-width: 768px) {
+            .comparison-slider { height: 500px; }
+        }
+        @media (min-width: 1024px) {
+            .comparison-slider { height: 600px; }
         }
 
         .comparison-slider .image-after {
@@ -295,10 +305,10 @@
 
     <!-- Navigation -->
     <nav class="fixed w-full top-0 z-50 glass-nav transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-6 lg:px-12 py-5 flex justify-between items-center relative">
-            <div class="text-2xl font-serif font-bold tracking-wider flex items-center gap-2 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0">
-                <img src="pictures/logo.png" alt="Logo" class="w-auto h-8">
-                SRK <span class="text-srk-wood">INTERIOR</span>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-4 md:py-5 flex justify-between items-center relative">
+            <div class="text-[1.1rem] sm:text-2xl font-serif font-bold tracking-wider flex items-center gap-1.5 sm:gap-2 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 whitespace-nowrap">
+                <img src="pictures/logo.png" alt="Logo" class="w-auto h-6 sm:h-8">
+                <span>SRK <span class="text-srk-wood">INTERIOR</span></span>
             </div>
 
             <div class="hidden md:flex gap-8 text-sm font-medium tracking-wide">
@@ -385,7 +395,7 @@
             </div>
 
             <!-- Hero Image / Composition -->
-            <div class="relative h-[600px] w-full hero-image-container group">
+            <div class="relative h-[400px] md:h-[500px] lg:h-[600px] w-full hero-image-container group">
                 <!-- Using picture tag for simulated responsive format handling -->
                 <picture>
                     <source srcset="pictures/1.png" type="image/png">
@@ -425,7 +435,7 @@
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 perspective-lg" id="gallery">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 perspective-lg" id="gallery">
                 <div class="group cursor-pointer scroll-anim collection-card" data-category="panels">
                     <div class="relative h-96 overflow-hidden rounded-sm mb-6 bg-srk-dark">
                         <!-- Lazy loaded -->
@@ -525,8 +535,8 @@
                 <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight">From Concept to Reality.</h2>
             </div>
 
-            <div class="grid md:grid-cols-4 gap-8 relative">
-                <div class="hidden md:block absolute top-10 left-[10%] right-[10%] h-[1px] bg-gray-200 z-0"></div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative">
+                <div class="hidden lg:block absolute top-10 left-[10%] right-[10%] h-[1px] bg-gray-200 z-0"></div>
 
                 <div class="relative z-10 flex flex-col items-center text-center scroll-anim">
                     <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
@@ -537,7 +547,7 @@
                     <p class="text-sm text-gray-500 font-light">We discuss your vision, space requirements, and budget constraints.</p>
                 </div>
 
-                <div class="relative z-10 flex flex-col items-center text-center scroll-anim" style="transition-delay: 100ms;">
+                <div class="relative z-10 flex flex-col items-center text-center scroll-anim">
                     <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
                         <i data-lucide="layers" class="w-8 h-8 text-srk-dark group-hover:text-srk-wood transition-colors"></i>
                     </div>
@@ -546,7 +556,7 @@
                     <p class="text-sm text-gray-500 font-light">Choose from our vast physical library of panels, louvers, and sheets.</p>
                 </div>
 
-                <div class="relative z-10 flex flex-col items-center text-center scroll-anim" style="transition-delay: 200ms;">
+                <div class="relative z-10 flex flex-col items-center text-center scroll-anim">
                     <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
                         <i data-lucide="box" class="w-8 h-8 text-srk-dark group-hover:text-srk-wood transition-colors"></i>
                     </div>
@@ -555,7 +565,7 @@
                     <p class="text-sm text-gray-500 font-light">Precise measurements are taken to ensure perfect panel cutting and alignment.</p>
                 </div>
 
-                <div class="relative z-10 flex flex-col items-center text-center scroll-anim" style="transition-delay: 300ms;">
+                <div class="relative z-10 flex flex-col items-center text-center scroll-anim">
                     <div class="w-20 h-20 rounded-full bg-[#F8F8F8] border border-gray-200 flex items-center justify-center mb-6 shadow-sm group hover:border-srk-wood transition-colors">
                         <i data-lucide="hammer" class="w-8 h-8 text-srk-dark group-hover:text-srk-wood transition-colors"></i>
                     </div>
@@ -595,7 +605,7 @@
                 </div>
 
                 <!-- Small Project 1 -->
-                <div class="relative group overflow-hidden rounded-sm scroll-anim cursor-pointer" style="transition-delay: 100ms;">
+                <div class="relative group overflow-hidden rounded-sm scroll-anim cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1556912167-f556f1f39fdf?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Modern Office" loading="lazy">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="absolute bottom-0 left-0 p-6">
@@ -605,7 +615,7 @@
                 </div>
 
                 <!-- Small Project 2 -->
-                <div class="relative group overflow-hidden rounded-sm scroll-anim cursor-pointer" style="transition-delay: 200ms;">
+                <div class="relative group overflow-hidden rounded-sm scroll-anim cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Master Bedroom" loading="lazy">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300"></div>
                     <div class="absolute bottom-0 left-0 p-6">
@@ -695,7 +705,7 @@
                 <h2 class="text-4xl md:text-5xl font-serif text-srk-dark leading-tight">Trusted by Homeowners & Architects.</h2>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
                 <div class="bg-[#F8F8F8] p-8 rounded-sm shadow-sm hover:shadow-md transition-shadow scroll-anim relative">
                     <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-gray-200"></i>
                     <div class="flex text-srk-gold mb-4">
@@ -714,7 +724,7 @@
                     </div>
                 </div>
 
-                <div class="bg-srk-dark text-white p-8 rounded-sm shadow-lg scroll-anim relative transform md:-translate-y-4">
+                <div class="bg-srk-dark text-white p-8 rounded-sm shadow-lg scroll-anim relative transform lg:-translate-y-4">
                     <i data-lucide="quote" class="absolute top-6 right-6 w-10 h-10 text-white/10"></i>
                     <div class="flex text-srk-gold mb-4">
                         <i data-lucide="star" class="w-4 h-4 fill-current"></i>
@@ -949,10 +959,10 @@
             // --- SCROLL ANIMATIONS ---
             gsap.utils.toArray('.scroll-anim').forEach(element => {
                 gsap.fromTo(element,
-                    { y: 80, opacity: 0, scale: 0.96 },
+                    { y: 50, opacity: 0, scale: 0.98 },
                     {
                         scrollTrigger: { trigger: element, start: "top 85%", toggleActions: "play reverse play reverse" },
-                        y: 0, opacity: 1, scale: 1, duration: 1.2, ease: "power3.out"
+                        y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power3.out"
                     }
                 );
             });
